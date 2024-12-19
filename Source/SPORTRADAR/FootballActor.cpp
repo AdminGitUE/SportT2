@@ -8,6 +8,8 @@ AFootballActor::AFootballActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned
@@ -70,4 +72,11 @@ void AFootballActor::ResetMovement()
 	bIsMoving = false;
 	CurrentPathIndex = 0;
 	SetActorLocation(PathPoints[0]);
+}
+
+void AFootballActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AFootballActor, CurrentPathIndex );
 }

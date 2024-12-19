@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Net/UnrealNetwork.h"
 #include "FootballActor.generated.h"
 
 UCLASS()
@@ -17,6 +18,8 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Expose these to Blueprint
 	UFUNCTION(BlueprintCallable, Category = "Movement")
@@ -47,7 +50,10 @@ public:
 	bool bIsMoving = false;
 	
 private:
+
+	UPROPERTY(Replicated)
 	int32 CurrentPathIndex = 0;
+	
 	FVector CurrentTarget;
 
 };
